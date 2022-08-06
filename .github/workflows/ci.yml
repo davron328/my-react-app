@@ -1,0 +1,24 @@
+name: CI
+on: 
+  pull_request:
+    branches: [dev]
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # change default node version
+      - name: Use NodeJS                # This will change the defaut node version to the 12.x. this optional. 
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      # installing dependencies
+      - run: npm ci                     # here, we could use 'npm install' but npm ci is more suiteble for ci envirenments. check the diff.
+      # checking code formatting.
+      - run: npm run format:check
+      - run: npm test -- -- coverage
+        env:                            # we need to set this env to avoid interactive terminal response when we run nmp test.
+          CI: true
+
+
