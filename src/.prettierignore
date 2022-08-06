@@ -1,0 +1,10 @@
+build
+coverage
+node_modules
+package-lock.json
+
+
+now we can run prettier command in our local to see if we have and formatting errors in our code:
+
+if prettier is installed not globally run this:
+> 
