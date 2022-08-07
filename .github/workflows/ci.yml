@@ -32,5 +32,3 @@ jobs:
         env:
           SUREGE_LOGIN: ${{ secrets.SUREGE_LOGIN }}
           SURGE_TOKEN: ${{ secrets.SUREGE_TOKEN}}
-          
-
