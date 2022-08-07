@@ -49,11 +49,12 @@ jobs:
 
       # Uploading Artifacts
       - name: Upload Build Folder
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v1
         with:
           name: build 
           path: build
-          
+
       - name: Deploy to Stage
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain boiling-copy.surge.sh
