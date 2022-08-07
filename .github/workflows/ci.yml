@@ -30,13 +30,32 @@ jobs:
       - run: npm ci # here, we could use 'npm install' but npm ci is more suiteble for ci envirenments. check the diff.
       # checking code formatting.
       - run: npm run format:check
+
+      # NOTE: TESTING AND UPLOADING TESTING COVERAGE STEPS COMMETED OUT BECAUSE OF THE ISSUES ING TESTING STEP.
       # - run: npm test -- -- coverage
       #   env: # we need to set this env to avoid interactive terminal response when we run nmp test.
       #     CI: true
 
+      # # Uploading Test Coverage.
+      # - name: Upload Test coverage
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: code-coverage # name of the file the coverage code will be writter. (Optional)
+      #     path: coverage # this folder will be created automatically when we run test in the above step.
+
+      # step two. Building and Deploying the Project.
       - name: Build Project
         if: github.event_name == 'push'
         run: npm run build
+
+      # Uploading Artifacts
+      - name: Upload Build Folder
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v1
+        with:
+          name: build
+          path: build
+
       - name: Deploy to Stage
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain boiling-copy.surge.sh
