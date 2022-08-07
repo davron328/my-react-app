@@ -1,24 +1,34 @@
 name: CI
-on: 
+on:
   pull_request:
     branches: [dev]
+  push:
+    branches: [dev]
 
-jobs: 
+jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       # change default node version
-      - name: Use NodeJS                # This will change the defaut node version to the 12.x. this optional. 
+      - name: Use NodeJS # This will change the defaut node version to the 12.x. this optional.
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
       # installing dependencies
-      - run: npm ci                     # here, we could use 'npm install' but npm ci is more suiteble for ci envirenments. check the diff.
+      - run: npm ci # here, we could use 'npm install' but npm ci is more suiteble for ci envirenments. check the diff.
       # checking code formatting.
       - run: npm run format:check
-      - run: npm test -- -- coverage
-        env:                            # we need to set this env to avoid interactive terminal response when we run nmp test.
-          CI: true
+      # - run: npm test -- -- coverage
+      #   env: # we need to set this env to avoid interactive terminal response when we run nmp test.
+      #     CI: true
 
-
+      - name: Build Project
+        if: github.event_name == 'push'
+        run: npm run build
+      - name: Deploy to Stage
+        if: github.event_name == 'push'
+        run: npx surge --project ./build --domain boiling-copy.surge.sh
+        env:
+          SUREGE_LOGIN: ${{ secrets.SUREGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SUREGE_TOKEN}}
