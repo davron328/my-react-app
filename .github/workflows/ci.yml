@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
-          
+
       # Caching dependencies.
       - name: Cache node_modules
         uses: actions/cache@v1
@@ -23,7 +23,7 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}node-${{ hashFiles('**/package-lock.json') }}
           # if cache with above name does not exist, it will use old cache whose name starts with ${{ runner.os }}node-
-          restore-key: |
+          restore-keys: |
             ${{ runner.os }}node-
 
       # installing dependencies
