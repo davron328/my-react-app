@@ -15,6 +15,17 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
+          
+      # Caching dependencies.
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}node-${{ hashFiles('**/package-lock.json') }}
+          # if cache with above name does not exist, it will use old cache whose name starts with ${{ runner.os }}node-
+          restore-key: |
+            ${{ runner.os }}node-
+
       # installing dependencies
       - run: npm ci # here, we could use 'npm install' but npm ci is more suiteble for ci envirenments. check the diff.
       # checking code formatting.
