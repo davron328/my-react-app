@@ -2,6 +2,8 @@ name: CI
 on:
   pull_request:
     branches: [dev]
+  push:
+    branches: [dev]
 
 jobs:
   build:
@@ -20,3 +22,15 @@ jobs:
       # - run: npm test -- -- coverage
       #   env: # we need to set this env to avoid interactive terminal response when we run nmp test.
       #     CI: true
+
+      - name: Build Project
+        if: github.event_name == 'push'
+        run: npm run build
+      - name: Deploy to Stage
+        if: github.event_name == 'push'
+        run: npx surge --project ./build --domain boiling-copy.surge.sh
+        env:
+          SUREGE_LOGIN: ${{ secrets.SUREGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SUREGE_TOKEN}}
+          
+
