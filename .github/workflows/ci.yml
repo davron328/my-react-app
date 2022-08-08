@@ -61,7 +61,7 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/master' # run only if it is a push and it is to the master.
         run: npx semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrests.MY_GITHUB_TOKEN }} # in order semantic-release auth to our github we need to provide git token.
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }} # in order semantic-release auth to our github we need to provide git token.
 
       - name: Deploy to Stage
         run: npx surge --project ./build --domain boiling-copy.surge.sh
