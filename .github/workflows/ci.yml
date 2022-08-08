@@ -14,7 +14,7 @@ jobs:
       - name: Use NodeJS # This will change the defaut node version to the 12.x. this optional.
         uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          node-version: "15.x"
 
       # Caching dependencies.
       - name: Cache node_modules
