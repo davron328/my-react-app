@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      SUREGE_LOGIN: ${{ secrets.SUREGE_LOGIN }}         # defining env variables in job level. evn variables get job scope.
+      SUREGE_LOGIN: ${{ secrets.SUREGE_LOGIN }} # defining env variables in job level. evn variables get job scope.
       SURGE_TOKEN: ${{ secrets.SUREGE_TOKEN}}
     steps:
       - uses: actions/checkout@v2
@@ -67,15 +67,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }} # in order semantic-release auth to our github we need to provide git token.
       # end of creation of release version
 
-      # DEPLOYMENTS 
+      # DEPLOYMENTS
 
       # Deploying to Stage
       - name: Deploy to Stage
         if: github.event_name == 'push' && github.ref == 'ref/heads/develop'
         run: npx surge --project ./build --domain boiling-copy.surge.sh
-      
+
       # Deploying to Production
       - name: Deploy to Production
         if: github.event_name == 'push' && github.ref == 'ref/heads/master'
-        run: npx surge --project ./build --domain delirious-fog.surge.sh     # here we are using deffent surge url. to deploy it to procuction. 
-      # end of deployments. 
+        run: npx surge --project ./build --domain delirious-fog.surge.sh # here we are using deffent surge url. to deploy it to procuction.
+      # end of deployments.
