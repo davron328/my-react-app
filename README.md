@@ -1,4 +1,4 @@
-![](https://github.com/davron328/my-react-app/workflow/CI/badge.svg?branch=dev&event=push)
+![](https://github.com/davron328/my-react-app/workflow/CI/badge.svg?branch=master&event=push)
 
 # Getting Started with Create React App
 
